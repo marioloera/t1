@@ -1,0 +1,8 @@
+Process:
+
+Read problem definition
+Read the documentation
+re-read problem definition
+First ideas, data structures, dictinoaries, modules
+Check data, easy to import to database
+-
