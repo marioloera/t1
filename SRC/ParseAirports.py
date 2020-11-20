@@ -25,11 +25,12 @@ def main():
     flights_file = os.path.join(data_dir, 'routes.dat')
 
     flightPerCountry1 = FlightPerCountry(aiports, countryFlights, flights_file)
+    flightPerCountry1.print_results()
 
 
 def get_airports(file_path):
-    airportIdIndex = 4  # 0:AirportId, 4: IATA 5:ICAO
-    countryIndex = 3
+    airport_id_index = 4  # 0:AirportId, 4: IATA 5:ICAO
+    country_index = 3
     aiports = {}
 
     try:
@@ -38,9 +39,9 @@ def get_airports(file_path):
 
             for row in reader:
                 # get the data per record
-                country = row[countryIndex]
-                airportId = row[airportIdIndex]
-                aiports[airportId] = country
+                country = row[country_index]
+                airport_id = row[airport_id_index]
+                aiports[airport_id] = country
 
     except OSError as ex:
         print(ex)
@@ -52,8 +53,8 @@ def init_countries(airports_dic):
     countries = {}
     for airportId, country in airports_dic.items():
         if country not in countries:
-            # domestic, internationals
-            countries[country] = (0, 0)
+            # country :[domestic, internationals]
+            countries[country] = [0, 0]
     return countries
 
 
@@ -62,35 +63,52 @@ class FlightPerCountry:
     def __init__(self, aiports, countries, file_path):
         self.aiports = aiports
         self.countries = countries
-        self.unkwonCountry = '?'
+        # self.is_double_count_for_internantionals = True
+        self.unknown_country = "unknown"
+        self.countries[self.unknown_country] = [0, 0]
+
         self.get_flights_per_country(file_path)
-        self.countries[self.unkwonCountry] = (0, 0)
+
+    def print_results(self):
+        print('\nresults:')
+        for country, flights in self.countries.items():
+            if flights[0] + flights[1] > 0:
+                print(country, flights)
 
     def get_flights_per_country(self, file_path):
         x = 0
         try:
             with open(file_path, 'r', encoding='UTF-8') as f:
                 reader = csv.reader(f)
-
                 for row in reader:
-                    x += 1
                     self.process_flight(row)
-                    if x == 10:
+                    x += 1
+                    if x == 20:
                         break
-                    pass
         except OSError as ex:
             print(ex)
             pass
 
     def process_flight(self, row):
 
-        sourceAirportIndex = 2
-        destinationAirportIndex = 4
-        sourceCountry = self.aiports.get(row[sourceAirportIndex], '?')
-        destinationCoutry = self.aiports.get(row[destinationAirportIndex], '?')
+        source_airport_index = 2
+        destination_airport_index = 4
+        source_country = self.aiports.get(row[source_airport_index],
+                                          self.unknown_country)
+        destination_coutry = self.aiports.get(row[destination_airport_index],
+                                              self.unknown_country)
 
-        print(row, sourceCountry, '->', destinationCoutry)
-        #if (sourceCountry == destinationCoutry):
+        domestic_flight = 1
+        international_flight = 0
+        if (source_country != destination_coutry):
+            domestic_flight = 0
+            international_flight = 1
+            # if self.is_double_count_for_internantionals:
+            #     self.countries[destination_coutry][0] += domestic_flight
+            #     self.countries[destination_coutry][1] += international_flight
+            #     print( source_country, '->', destination_coutry)
+        self.countries[source_country][0] += domestic_flight
+        self.countries[source_country][1] += international_flight
 
 
 if __name__ == '__main__':
