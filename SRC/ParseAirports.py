@@ -71,11 +71,15 @@ class FlightPerCountry:
 
     def print_results(self):
         print('\nresults:')
+        domesticAcc = 0
+        internationalAcc = 0
         for country in sorted(self.countries.keys()):
             flights = self.countries[country]
             if sum(flights) > 0:
+                domesticAcc += flights[0]
+                internationalAcc += flights[1]
                 print(country, flights[0], flights[1])
-
+        print(domesticAcc + internationalAcc, domesticAcc, internationalAcc)
     def get_flights_per_country(self, file_path):
         x = 0
         try:
@@ -84,8 +88,8 @@ class FlightPerCountry:
                 for row in reader:
                     self.process_flight(row)
                     x += 1
-                    if x == 70:
-                        break
+                    #if x == 70:
+                        #break
         except OSError as ex:
             print(ex)
             pass
