@@ -7,8 +7,13 @@ airport codes
 *** 
 UTF-8 encoded
 
+
+**** 
+documents strings 
+
 ****
-assumptions
+write assumptions:
+	using IATA, 
 
 loging
 profiling
