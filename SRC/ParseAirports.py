@@ -23,10 +23,12 @@ def main():
 
     # proces flights
     flights_file = os.path.join(data_dir, 'routes.dat')
-    get_flights_per_country(country_dict=countryFlights, file_path=flights_file)
+
+    flightPerCountry1 = FlightPerCountry(aiports, countryFlights, flights_file)
+
 
 def get_airports(file_path):
-    airportIdIndex = 4 # 0:AirportId, 4: IATA 5:ICAO 
+    airportIdIndex = 4  # 0:AirportId, 4: IATA 5:ICAO
     countryIndex = 3
     aiports = {}
 
@@ -45,38 +47,51 @@ def get_airports(file_path):
         pass
     return aiports
 
+
 def init_countries(airports_dic):
-    countries = {'?': (0, 0)}
+    countries = {}
     for airportId, country in airports_dic.items():
         if country not in countries:
             # domestic, internationals
             countries[country] = (0, 0)
     return countries
 
-def get_flights_per_country(file_path, country_dict):
 
-    
-    x = 0
-    try:
-        with open(file_path, 'r', encoding='UTF-8') as f:
-            reader = csv.reader(f)
+class FlightPerCountry:
 
-            for row in reader:
-                x += 1
-                process_flight(row)
-                if x == 10:
-                    break
-                pass
-    except OSError as ex:
-        print(ex)
-        pass
+    def __init__(self, aiports, countries, file_path):
+        self.aiports = aiports
+        self.countries = countries
+        self.unkwonCountry = '?'
+        self.get_flights_per_country(file_path)
+        self.countries[self.unkwonCountry] = (0, 0)
 
-def process_flight(row):
-    print(row)
-    sourceAirportIndex = 2
-    sourceAirportIdIndex = 3
-    destinationAirportIndex = 4
-    destinationAirportIdIndex = 5
+    def get_flights_per_country(self, file_path):
+        x = 0
+        try:
+            with open(file_path, 'r', encoding='UTF-8') as f:
+                reader = csv.reader(f)
+
+                for row in reader:
+                    x += 1
+                    self.process_flight(row)
+                    if x == 10:
+                        break
+                    pass
+        except OSError as ex:
+            print(ex)
+            pass
+
+    def process_flight(self, row):
+
+        sourceAirportIndex = 2
+        destinationAirportIndex = 4
+        sourceCountry = self.aiports.get(row[sourceAirportIndex], '?')
+        destinationCoutry = self.aiports.get(row[destinationAirportIndex], '?')
+
+        print(row, sourceCountry, '->', destinationCoutry)
+        #if (sourceCountry == destinationCoutry):
+
 
 if __name__ == '__main__':
     main()
