@@ -29,7 +29,7 @@ def main():
 
 
 def get_airports(file_path):
-    airport_id_index = 4  # 0:AirportId, 4: IATA 5:ICAO
+    airport_id_index = 4  # 0:AirportId, 4: IATA, 5:ICAO
     country_index = 3
     aiports = {}
 
@@ -83,7 +83,7 @@ class FlightPerCountry:
                 for row in reader:
                     self.process_flight(row)
                     x += 1
-                    if x == 20:
+                    if x == 70:
                         break
         except OSError as ex:
             print(ex)
