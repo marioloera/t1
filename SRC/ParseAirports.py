@@ -10,21 +10,23 @@ def main():
 
     print(f"src_dir: {src_dir}")
     print(f"data_dir: {data_dir}")
-    
+
     # proces airports
     airports_file = os.path.join(data_dir, 'airports.dat')
 
     aiports = get_airports(file_path=airports_file)
-    # 14104: Russia
-    print(f"14104: {aiports.get('14104', '?')}")
+    # LAX: United States
+    print(f"LAX: {aiports.get('LAX', '?')}")
 
-    countries = init_countries(aiports)
-    print(f"Uruguay: {countries['Uruguay']}")
+    countryFlights = init_countries(aiports)
+    print(f"Uruguay: {countryFlights['Uruguay']}")
 
-    # proces flights 
+    # proces flights
+    flights_file = os.path.join(data_dir, 'routes.dat')
+    get_flights_per_country(country_dict=countryFlights, file_path=flights_file)
 
 def get_airports(file_path):
-    airportIdIndex = 0
+    airportIdIndex = 4 # 0:AirportId, 4: IATA 5:ICAO 
     countryIndex = 3
     aiports = {}
 
@@ -44,24 +46,37 @@ def get_airports(file_path):
     return aiports
 
 def init_countries(airports_dic):
-    countries = {}
+    countries = {'?': (0, 0)}
     for airportId, country in airports_dic.items():
         if country not in countries:
             # domestic, internationals
             countries[country] = (0, 0)
     return countries
 
-def get_flights(file_path):
+def get_flights_per_country(file_path, country_dict):
+
+    
+    x = 0
     try:
         with open(file_path, 'r', encoding='UTF-8') as f:
             reader = csv.reader(f)
 
             for row in reader:
+                x += 1
+                process_flight(row)
+                if x == 10:
+                    break
                 pass
     except OSError as ex:
         print(ex)
         pass
 
+def process_flight(row):
+    print(row)
+    sourceAirportIndex = 2
+    sourceAirportIdIndex = 3
+    destinationAirportIndex = 4
+    destinationAirportIdIndex = 5
 
 if __name__ == '__main__':
     main()
