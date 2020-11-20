@@ -71,9 +71,10 @@ class FlightPerCountry:
 
     def print_results(self):
         print('\nresults:')
-        for country, flights in self.countries.items():
-            if flights[0] + flights[1] > 0:
-                print(country, flights)
+        for country in sorted(self.countries.keys()):
+            flights = self.countries[country]
+            if sum(flights) > 0:
+                print(country, flights[0], flights[1])
 
     def get_flights_per_country(self, file_path):
         x = 0
