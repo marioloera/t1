@@ -14,24 +14,24 @@ def main():
     # proces airports
     airports_file = os.path.join(data_dir, 'airports.dat')
 
-    aiports = get_airports(file_path=airports_file)
+    airports = get_airports(file_path=airports_file)
     # LAX: United States
-    print(f"LAX: {aiports.get('LAX', '?')}")
+    print(f"LAX: {airports.get('LAX', '?')}")
 
-    countryFlights = init_countries(aiports)
+    countryFlights = init_countries(airports)
     print(f"Uruguay: {countryFlights['Uruguay']}")
 
     # proces flights
     flights_file = os.path.join(data_dir, 'routes.dat')
 
-    flightPerCountry1 = FlightPerCountry(aiports, countryFlights, flights_file)
+    flightPerCountry1 = FlightPerCountry(airports, countryFlights, flights_file)
     flightPerCountry1.print_results()
 
 
 def get_airports(file_path):
     airport_id_index = 4  # 0:AirportId, 4: IATA, 5:ICAO
     country_index = 3
-    aiports = {}
+    airports = {}
 
     try:
         with open(file_path, 'r', encoding='UTF-8') as f:
@@ -41,12 +41,12 @@ def get_airports(file_path):
                 # get the data per record
                 country = row[country_index]
                 airport_id = row[airport_id_index]
-                aiports[airport_id] = country
+                airports[airport_id] = country
 
     except OSError as ex:
         print(ex)
         pass
-    return aiports
+    return airports
 
 
 def init_countries(airports_dic):
@@ -60,8 +60,8 @@ def init_countries(airports_dic):
 
 class FlightPerCountry:
 
-    def __init__(self, aiports, countries, file_path):
-        self.aiports = aiports
+    def __init__(self, airports, countries, file_path):
+        self.airports = airports
         self.countries = countries
         # self.is_double_count_for_internantionals = True
         self.unknown_country = "unknown"
@@ -122,7 +122,7 @@ class FlightPerCountry:
         self.countries[source_country][1] += international_flight
 
     def get_airport_country(self, airport_code=None, airport_id=None):
-        country = self.aiports.get(airport_code, self.unknown_country)
+        country = self.airports.get(airport_code, self.unknown_country)
         return country
 
 
