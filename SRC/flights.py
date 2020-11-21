@@ -26,7 +26,7 @@ def main():
     flights_file = os.path.join(data_dir, 'routes.dat')
 
 
-    flightPerCountry2 = proces_flights.FlightPerCountry
+    flightPerCountry2 = proces_flights.FlightPerCountry(airports, flights_file)
     flightPerCountry2.print_results()
 
 def get_airports(file_path):
