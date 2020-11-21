@@ -3,9 +3,16 @@ import os
 import csv
 from modules import airports
 from modules import country_flights
+import argparse
 
 
 def main():
+
+    # output file
+    parser = argparse.ArgumentParser()
+    parser.add_argument("output_file",
+                        help="output file where results are stored")
+    args = parser.parse_args()
 
     src_dir = os.path.dirname(os.path.realpath(__file__))
     data_dir = os.path.join(src_dir, '..', 'input_data')
@@ -20,7 +27,9 @@ def main():
     flight_per_country = country_flights.FlightPerCountry(
         airport1.airports_by_iata)
     process_flight_file(flights_file, flight_per_country)
-    flight_per_country.print_results()
+
+    # results
+    flight_per_country.save_results(args.output_file)
 
 
 def process_airport_file(file_path, _airport):
@@ -41,15 +50,11 @@ def process_flight_file(file_path, _flight_per_country):
     and call the funtion process_flight to get the 
     domistic and international flights for each country
     '''
-    x = 0
     try:
         with open(file_path, 'r', encoding='UTF-8') as f:
             reader = csv.reader(f)
             for row in reader:
                 _flight_per_country.process_flight(row)
-                x += 1
-                if x == 70:
-                    break
     except OSError as ex:
         print(ex)
         pass
@@ -57,4 +62,4 @@ def process_flight_file(file_path, _flight_per_country):
 
 if __name__ == '__main__':
     main()
-    print('clean exit')
+    print('process completed!')
