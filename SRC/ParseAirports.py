@@ -99,11 +99,12 @@ class FlightPerCountry:
 
         source_airport = row[2]
         source_airport_id = row[3]
-        destination_airport = row [4]
+        destination_airport = row[4]
         destination_airport_id = row[5]
-        source_country = self.aiports.get(source_airport, self.unknown_country)
-        destination_coutry = self.aiports.get(destination_airport,
-                                              self.unknown_country)
+        source_country = self.get_airport_country(airport_code=source_airport)
+        destination_coutry = self.get_airport_country(
+            airport_code=destination_airport)
+
         # unknow destination will be add to unknow country count
         if destination_coutry == self.unknown_country:
             source_country = self.unknown_country
@@ -119,6 +120,10 @@ class FlightPerCountry:
             #     print( source_country, '->', destination_coutry)
         self.countries[source_country][0] += domestic_flight
         self.countries[source_country][1] += international_flight
+
+    def get_airport_country(self, airport_code=None, airport_id=None):
+        country = self.aiports.get(airport_code, self.unknown_country)
+        return country
 
 
 if __name__ == '__main__':
