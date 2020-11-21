@@ -92,9 +92,9 @@ class FlightPerCountry:
                 reader = csv.reader(f)
                 for row in reader:
                     self.process_flight(row)
-                    x += 1
-                    if x == 70:
-                        break
+                    # x += 1
+                    # if x == 70:
+                    #     break
         except OSError as ex:
             print(ex)
             pass
@@ -117,16 +117,16 @@ class FlightPerCountry:
         destination_coutry = self.get_airport_country(
             airport_code=destination_airport)
 
-        # unknow destination will be add to unknow country count
-        if destination_coutry == self.unknown_country:
-            source_country = self.unknown_country
-
         # add flights to countries
         domestic_flight = 1
         international_flight = 0
         if (source_country != destination_coutry):
             domestic_flight = 0
             international_flight = 1
+
+        # unknow destination will be add to unknow country count
+        if destination_coutry == self.unknown_country:
+            source_country = self.unknown_country
 
         self.countries[source_country][0] += domestic_flight
         self.countries[source_country][1] += international_flight
