@@ -97,13 +97,13 @@ class FlightPerCountry:
 
     def process_flight(self, row):
 
-        source_airport_index = 2
-        destination_airport_index = 4
-        source_country = self.aiports.get(row[source_airport_index],
-                                          self.unknown_country)
-        destination_coutry = self.aiports.get(row[destination_airport_index],
+        source_airport = row[2]
+        source_airport_id = row[3]
+        destination_airport = row [4]
+        destination_airport_id = row[5]
+        source_country = self.aiports.get(source_airport, self.unknown_country)
+        destination_coutry = self.aiports.get(destination_airport,
                                               self.unknown_country)
-
         # unknow destination will be add to unknow country count
         if destination_coutry == self.unknown_country:
             source_country = self.unknown_country
