@@ -41,7 +41,7 @@ class FlightPerCountry:
         destination_coutry = self.get_airport_country(
             airport_code=destination_airport)
 
-        # add flights to countries
+        # check if is domestic or international flight
         domestic_flight = 1
         international_flight = 0
         if (source_country != destination_coutry):
