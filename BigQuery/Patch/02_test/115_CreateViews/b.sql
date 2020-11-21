@@ -1,0 +1,4 @@
+CREATE OR REPLACE VIEW Flights.test AS (
+
+    SELECT 10 AS A, 'TEXT' AS B
+)
