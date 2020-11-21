@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import csv
 
 
 class FlightPerCountry:
@@ -22,6 +23,31 @@ class FlightPerCountry:
                 internationalAcc += flights[1]
                 print(country, flights[0], flights[1])
         print(domesticAcc + internationalAcc, domesticAcc, internationalAcc)
+
+    def save_results(self, output_file):
+        """
+        outputs the number of domestic and international flights for 
+        each country according to this format: 
+        country,domestic_flights,international_flights, e.g.
+            Austria,2380,1220
+            [...]
+            United Kingdom,12371,2899
+            [...]
+        """
+        results = []
+        for country in sorted(self.countries.keys()):
+            flights = self.countries[country]
+            domestic_flights = flights[0]
+            international_flights = flights[1]
+            results.append([country, domestic_flights, international_flights])
+
+        try:
+            with open(output_file, 'w', newline='') as f:
+                writer = csv.writer(f)
+                writer.writerows(results)
+        except OSError as ex:
+            print(ex)
+            pass
 
     def process_flight(self, row):
         '''
