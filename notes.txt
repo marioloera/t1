@@ -1,19 +1,13 @@
 ***
 system requirements python version
 Readme: instuctions, inputs, out put
-for internationl flights, count only origin?
-airport codes
-
-*** 
-UTF-8 encoded
-
-
-**** 
-documents strings 
 
 ****
 write assumptions:
-	using IATA, 
+	using IATA codes, later can use AirportId, or ICAO code
+	taking routes.dat as an templete for flights.dat 
+	international flight are added to the country of origin
+	some codes in ruutes.dat are not in airports.dat
 
 loging
 profiling
@@ -24,20 +18,9 @@ unit test:
 	*full resulsts
 
 
-
-****
-simple functions
-
-***
-small files
-
 *** extension, ideas, group per airline
+
 *** airflow pipeline
 
-
-**** dictionary with country and airports codes
 *****new files, vs modify files -> delta loads
-
-
-what to do with indirect flights???
 
