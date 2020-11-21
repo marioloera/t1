@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 import os
 import csv
-from modules import proces_flights
+from modules import airports
+from modules import country_flights
 
 
 def main():
@@ -9,45 +10,31 @@ def main():
     src_dir = os.path.dirname(os.path.realpath(__file__))
     data_dir = os.path.join(src_dir, '..', 'input_data')
 
-    print(f"src_dir: {src_dir}")
-    print(f"data_dir: {data_dir}")
-
     # proces airports
     airports_file = os.path.join(data_dir, 'airports.dat')
-
-    airports = get_airports(file_path=airports_file)
-    # LAX: United States
-    print(f"LAX: {airports.get('LAX', '?')}")
+    airport1 = airports.Airport()
+    process_airport_file(airports_file, airport1)
 
     # proces flights
     flights_file = os.path.join(data_dir, 'routes.dat')
-    flight_per_country = proces_flights.FlightPerCountry(airports)
+    flight_per_country = country_flights.FlightPerCountry(airport1.airports_by_iata)
     process_flight_file(flights_file, flight_per_country)
     flight_per_country.print_results()
 
 
-def get_airports(file_path):
-    airport_id_index = 4  # 0:AirportId, 4: IATA, 5:ICAO
-    country_index = 3
-    airports = {}
-
+def process_airport_file(file_path, _airport):
     try:
         with open(file_path, 'r', encoding='UTF-8') as f:
             reader = csv.reader(f)
-
             for row in reader:
-                # get the data per record
-                country = row[country_index]
-                airport_id = row[airport_id_index]
-                airports[airport_id] = country
+                _airport.process_airport_row(row)
 
     except OSError as ex:
         print(ex)
         pass
-    return airports
 
 
-def process_flight_file(file_path, flight_per_ountry):
+def process_flight_file(file_path, _flight_per_country):
     '''
     process the csv data in the file
     and call the funtion process_flight to get the 
@@ -58,7 +45,7 @@ def process_flight_file(file_path, flight_per_ountry):
         with open(file_path, 'r', encoding='UTF-8') as f:
             reader = csv.reader(f)
             for row in reader:
-                flight_per_ountry.process_flight(row)
+                _flight_per_country.process_flight(row)
                 x += 1
                 if x == 70:
                     break

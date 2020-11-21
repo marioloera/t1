@@ -3,8 +3,9 @@
 
 class FlightPerCountry:
 
-    def __init__(self, airports):
-        self.airports = airports
+    def __init__(self, airports_by_iata):
+        # TODO receive airports_by_id, airports_by_icao
+        self.airports_by_iata = airports_by_iata
         self.countries = {}
         self.unknown_country = "unknown"
         # {country:[domestic_flight, international_flight]}
@@ -63,9 +64,10 @@ class FlightPerCountry:
         '''
         return the country for airport.
         frist checking the ariport_code in the iata dictionary, 
-        then airport_id in the airport id dictionary,
-        last airport_code in the icao dictionary.
+        
+        # TODO then airport_id in the airport id dictionary,
+        # TODO last airport_code in the icao dictionary.
         if not found then return unknown_country variable.
         '''
-        country = self.airports.get(airport_code, self.unknown_country)
+        country = self.airports_by_iata.get(airport_code, self.unknown_country)
         return country
