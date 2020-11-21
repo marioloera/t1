@@ -1,16 +1,14 @@
 #!/usr/bin/env python3
-import csv
+
 
 class FlightPerCountry:
 
-    def __init__(self, airports, file_path):
+    def __init__(self, airports):
         self.airports = airports
         self.countries = {}
         self.unknown_country = "unknown"
         # {country:[domestic_flight, international_flight]}
         self.countries[self.unknown_country] = [0, 0]
-
-        self.get_flights_per_country(file_path)
 
     def print_results(self):
         print('\nresults:')
@@ -23,25 +21,6 @@ class FlightPerCountry:
                 internationalAcc += flights[1]
                 print(country, flights[0], flights[1])
         print(domesticAcc + internationalAcc, domesticAcc, internationalAcc)
-
-    def get_flights_per_country(self, file_path):
-        '''
-        process the csv data in the file
-        and call the funtion process_flight to get the 
-        domistic and international flights for each country
-        '''
-        x = 0
-        try:
-            with open(file_path, 'r', encoding='UTF-8') as f:
-                reader = csv.reader(f)
-                for row in reader:
-                    self.process_flight(row)
-                    # x += 1
-                    # if x == 70:
-                    #     break
-        except OSError as ex:
-            print(ex)
-            pass
 
     def process_flight(self, row):
         '''
