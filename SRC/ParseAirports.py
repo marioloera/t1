@@ -24,7 +24,7 @@ def main():
     # proces flights
     flights_file = os.path.join(data_dir, 'routes.dat')
 
-    flightPerCountry1 = FlightPerCountry(airports, countryFlights, flights_file)
+    flightPerCountry1 = FlightPerCountry(airports, flights_file)
     flightPerCountry1.print_results()
 
 
@@ -60,10 +60,11 @@ def init_countries(airports_dic):
 
 class FlightPerCountry:
 
-    def __init__(self, airports, countries, file_path):
+    def __init__(self, airports, file_path):
         self.airports = airports
-        self.countries = countries
+        self.countries = {}
         self.unknown_country = "unknown"
+        # {country:[domestic_flight, international_flight]}
         self.countries[self.unknown_country] = [0, 0]
 
         self.get_flights_per_country(file_path)
@@ -128,6 +129,11 @@ class FlightPerCountry:
         if destination_coutry == self.unknown_country:
             source_country = self.unknown_country
 
+        # add country to countries dictionary
+        if source_country not in self.countries:
+            self.countries[source_country] = [0, 0]
+
+        # add flights to countries
         self.countries[source_country][0] += domestic_flight
         self.countries[source_country][1] += international_flight
 
