@@ -80,6 +80,7 @@ class FlightPerCountry:
                 internationalAcc += flights[1]
                 print(country, flights[0], flights[1])
         print(domesticAcc + internationalAcc, domesticAcc, internationalAcc)
+
     def get_flights_per_country(self, file_path):
         x = 0
         try:
@@ -88,8 +89,8 @@ class FlightPerCountry:
                 for row in reader:
                     self.process_flight(row)
                     x += 1
-                    #if x == 70:
-                        #break
+                    if x == 70:
+                        break
         except OSError as ex:
             print(ex)
             pass
@@ -102,6 +103,10 @@ class FlightPerCountry:
                                           self.unknown_country)
         destination_coutry = self.aiports.get(row[destination_airport_index],
                                               self.unknown_country)
+
+        # unknow destination will be add to unknow country count
+        if destination_coutry == self.unknown_country:
+            source_country = self.unknown_country
 
         domestic_flight = 1
         international_flight = 0

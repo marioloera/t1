@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+
 import os
 from yapf.yapflib.yapf_api import FormatFile  # reformat a file
 
