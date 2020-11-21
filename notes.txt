@@ -1,26 +1,5 @@
-***
-system requirements python version
-Readme: instuctions, inputs, out put
-
-****
-write assumptions:
-	using IATA codes, later can use AirportId, or ICAO code
-	taking routes.dat as an templete for flights.dat 
-	international flight are added to the country of origin
-	some codes in ruutes.dat are not in airports.dat
-
-loging
-profiling
-
-**** 
-unit test:
-	*read file
-	*full resulsts
-
-
-*** extension, ideas, group per airline
-
-*** airflow pipeline
-
-*****new files, vs modify files -> delta loads
-
+**** Assumptions:
+    using IATA codes, later can use AirportId, or ICAO code
+    taking routes.dat as an templete for flights.dat 
+    international flight are added to the country of origin
+    some codes in ruutes.dat are not in airports.dat
