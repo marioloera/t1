@@ -17,7 +17,8 @@ def main():
 
     # proces flights
     flights_file = os.path.join(data_dir, 'routes.dat')
-    flight_per_country = country_flights.FlightPerCountry(airport1.airports_by_iata)
+    flight_per_country = country_flights.FlightPerCountry(
+        airport1.airports_by_iata)
     process_flight_file(flights_file, flight_per_country)
     flight_per_country.print_results()
 
