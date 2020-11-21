@@ -63,7 +63,6 @@ class FlightPerCountry:
     def __init__(self, airports, countries, file_path):
         self.airports = airports
         self.countries = countries
-        # self.is_double_count_for_internantionals = True
         self.unknown_country = "unknown"
         self.countries[self.unknown_country] = [0, 0]
 
@@ -82,6 +81,11 @@ class FlightPerCountry:
         print(domesticAcc + internationalAcc, domesticAcc, internationalAcc)
 
     def get_flights_per_country(self, file_path):
+        '''
+        process the csv data in the file
+        and call the funtion process_flight to get the 
+        domistic and international flights for each country
+        '''
         x = 0
         try:
             with open(file_path, 'r', encoding='UTF-8') as f:
@@ -96,11 +100,19 @@ class FlightPerCountry:
             pass
 
     def process_flight(self, row):
-
+        '''
+        Procees each flight, get the airport countries
+        and add domestic or international flight to the countries dictionary 
+        fro the source country.
+        unknown airport will be add to the unknown coutry record
+        '''
+        # get row info
         source_airport = row[2]
         source_airport_id = row[3]
         destination_airport = row[4]
         destination_airport_id = row[5]
+
+        # get countrys
         source_country = self.get_airport_country(airport_code=source_airport)
         destination_coutry = self.get_airport_country(
             airport_code=destination_airport)
@@ -109,19 +121,24 @@ class FlightPerCountry:
         if destination_coutry == self.unknown_country:
             source_country = self.unknown_country
 
+        # add flights to countries
         domestic_flight = 1
         international_flight = 0
         if (source_country != destination_coutry):
             domestic_flight = 0
             international_flight = 1
-            # if self.is_double_count_for_internantionals:
-            #     self.countries[destination_coutry][0] += domestic_flight
-            #     self.countries[destination_coutry][1] += international_flight
-            #     print( source_country, '->', destination_coutry)
+
         self.countries[source_country][0] += domestic_flight
         self.countries[source_country][1] += international_flight
 
     def get_airport_country(self, airport_code=None, airport_id=None):
+        '''
+        return the country for airport.
+        frist checking the ariport_code in the iata dictionary, 
+        then airport_id in the airport id dictionary,
+        last airport_code in the icao dictionary.
+        if not found then return unknown_country variable.
+        '''
         country = self.airports.get(airport_code, self.unknown_country)
         return country
 
