@@ -11,7 +11,7 @@ files_to_format = []
 for root, _, files in os.walk(directory):
 
     for name in files:
-        if '.py' not in name:
+        if '.py' not in name or '.pyc' in name:
             continue
         print(name)
         file = os.path.join(root, name)

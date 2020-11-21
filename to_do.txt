@@ -1,3 +1,4 @@
-review dictionaryes
-
-review csv files
+* unit testing
+* maybe similar in BigQuery
+* input arguments
+* save results in output.txt United Kingdom,12371,2899
