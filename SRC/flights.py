@@ -32,6 +32,7 @@ def main():
     results = flight_per_country.get_results_format1()
     save_data(args.output_file, results)
 
+
 def process_airport_file(file_path, _airport):
     try:
         with open(file_path, 'r', encoding='UTF-8') as f:
@@ -42,6 +43,7 @@ def process_airport_file(file_path, _airport):
     except OSError as ex:
         print(ex)
         pass
+
 
 def process_flight_file(file_path, _flight_per_country):
     '''
@@ -58,6 +60,7 @@ def process_flight_file(file_path, _flight_per_country):
         print(ex)
         pass
 
+
 def save_data(file_path, data):
 
     try:
@@ -68,6 +71,7 @@ def save_data(file_path, data):
     except OSError as ex:
         print(ex)
         pass
+
 
 if __name__ == '__main__':
     main()
