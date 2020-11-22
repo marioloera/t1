@@ -49,12 +49,16 @@ class TestFlightPerCountry(unittest.TestCase):
         self.assertEqual(result, expected)
 
     def test_get_country_flights(self):
+        """  this can check partial results, order not important
+            for example United States is exluded in the test 
+            but is pressent in the flightPerCountry.countries
+        """
         flightPerCountry = country_flights.FlightPerCountry(self.IataCountry)
 
         expected = {
-            "Sweden": [1, 1],
-            "United States": [1, 1],
             flightPerCountry.unknown_country: [1, 2],
+            # "United States": [1, 1],
+            "Sweden": [1, 1],
         }
 
         for row in self.FlightDataA:
@@ -63,6 +67,26 @@ class TestFlightPerCountry(unittest.TestCase):
         result = {}
         for country in expected:
             result[country] = flightPerCountry.countries[country]
+
+        self.assertEqual(result, expected)
+
+    def test_result_format(self):
+        """  this can check full results, order important
+            results are list of list.
+        """
+
+        flightPerCountry = country_flights.FlightPerCountry(self.IataCountry)
+
+        expected = [
+            ["Sweden", 1, 1],
+            ["United States", 1, 1],
+            [flightPerCountry.unknown_country, 1, 2],
+        ]
+
+        for row in self.FlightDataA:
+            flightPerCountry.process_flight(row)
+
+        result = flightPerCountry.get_results_format1()
 
         self.assertEqual(result, expected)
 

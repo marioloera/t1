@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-import csv
 
 
 class FlightPerCountry:
@@ -12,42 +11,16 @@ class FlightPerCountry:
         # {country:[domestic_flight, international_flight]}
         self.countries[self.unknown_country] = [0, 0]
 
-    def print_results(self):
-        print('\nresults:')
-        domesticAcc = 0
-        internationalAcc = 0
-        for country in sorted(self.countries.keys()):
-            flights = self.countries[country]
-            if sum(flights) > 0:
-                domesticAcc += flights[0]
-                internationalAcc += flights[1]
-                print(country, flights[0], flights[1])
-        print(domesticAcc + internationalAcc, domesticAcc, internationalAcc)
-
-    def save_results(self, output_file):
+    def get_results_format1(self):
         """
-        outputs the number of domestic and international flights for 
-        each country according to this format: 
-        country,domestic_flights,international_flights, e.g.
-            Austria,2380,1220
-            [...]
-            United Kingdom,12371,2899
-            [...]
+        return an list of list:
+        [[country, domestic flights, international_fligthts],]
+        in alphabetical order
         """
-        results = []
-        for country in sorted(self.countries.keys()):
-            flights = self.countries[country]
-            domestic_flights = flights[0]
-            international_flights = flights[1]
-            results.append([country, domestic_flights, international_flights])
+        results = [[c, self.countries[c][0], self.countries[c][1]]
+                   for c in sorted(self.countries.keys())]
 
-        try:
-            with open(output_file, 'w', newline='') as f:
-                writer = csv.writer(f)
-                writer.writerows(results)
-        except OSError as ex:
-            print(ex)
-            pass
+        return results
 
     def process_flight(self, row):
         '''
