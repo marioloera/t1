@@ -1,6 +1,18 @@
 #!/usr/bin/env python3
 
 
+class RutesColumns:
+    airline = 0
+    airline_id = 1
+    source_airport = 2
+    source_airport_id = 3
+    destination_airport = 4
+    destination_airport_id = 5
+    codeshare = 6
+    stops = 7
+    equipment = 8
+
+
 class FlightPerCountry:
 
     def __init__(self, airports_by_iata):
@@ -10,6 +22,7 @@ class FlightPerCountry:
         self.unknown_country = "unknown"
         # {country:[domestic_flight, international_flight]}
         self.countries[self.unknown_country] = [0, 0]
+        self.rutes_col = RutesColumns()
 
     def get_results_format1(self):
         """
@@ -30,10 +43,10 @@ class FlightPerCountry:
         unknown airport will be add to the unknown country record
         '''
         # get row info
-        source_airport = row[2]
-        source_airport_id = row[3]
-        destination_airport = row[4]
-        destination_airport_id = row[5]
+        source_airport = row[self.rutes_col.source_airport]
+        source_airport_id = row[self.rutes_col.source_airport_id]
+        destination_airport = row[self.rutes_col.destination_airport]
+        destination_airport_id = row[self.rutes_col.destination_airport_id]
 
         # get countries
         source_country = self.get_airport_country(airport_code=source_airport)
