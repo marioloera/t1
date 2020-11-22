@@ -38,6 +38,7 @@ def main():
     print(f'deployCount: {deployCount}')
     print(f'copyCount: {copyCount}')
 
+
 def mv_file(filename, source_dir, target_dir, keep_original=True):
     copied = 0
     new_destinantion = filename.replace(source_dir, target_dir)
