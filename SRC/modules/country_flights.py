@@ -54,7 +54,7 @@ class FlightPerCountry:
         Procees each flight, get the airport countries
         and add domestic or international flight to the countries dictionary 
         fro the source country.
-        unknown airport will be add to the unknown coutry record
+        unknown airport will be add to the unknown country record
         '''
         # get row info
         source_airport = row[2]
@@ -62,20 +62,20 @@ class FlightPerCountry:
         destination_airport = row[4]
         destination_airport_id = row[5]
 
-        # get countrys
+        # get countries
         source_country = self.get_airport_country(airport_code=source_airport)
-        destination_coutry = self.get_airport_country(
+        destination_country = self.get_airport_country(
             airport_code=destination_airport)
 
         # check if is domestic or international flight
         domestic_flight = 1
         international_flight = 0
-        if (source_country != destination_coutry):
+        if (source_country != destination_country):
             domestic_flight = 0
             international_flight = 1
 
         # unknow destination will be add to unknow country count
-        if destination_coutry == self.unknown_country:
+        if destination_country == self.unknown_country:
             source_country = self.unknown_country
 
         # add country to countries dictionary

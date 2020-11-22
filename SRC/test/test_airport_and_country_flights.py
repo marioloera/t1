@@ -49,5 +49,5 @@ class TestFlightPerCountry(unittest.TestCase):
 
         self.assertEqual(result, expected)
 
-
-unittest.main()
+if __name__ == '__main__':
+    unittest.main()
