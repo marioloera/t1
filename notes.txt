@@ -2,4 +2,4 @@
     using IATA codes, later can use AirportId, or ICAO code
     taking routes.dat as an templete for flights.dat 
     international flight are added to the country of origin
-    some codes in ruutes.dat are not in airports.dat
+    some codes in ruotes.dat are not in airports.dat

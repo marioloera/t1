@@ -6,3 +6,9 @@ re-read problem definition
 First ideas, data structures, dictinoaries, modules
 Check data, easy to import to BigQuery:
     check values mising, which airport code to use, better tu use IATA
+coding: 
+    1st monolite
+    query in bigquery, same results
+    modules
+    unit test
+    improvements
