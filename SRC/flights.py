@@ -28,9 +28,9 @@ def main():
         airport1.airports_by_iata)
     process_flight_file(flights_file, flight_per_country)
 
-    # results
-    flight_per_country.save_results(args.output_file)
-
+    # save results
+    results = flight_per_country.get_results_format1()
+    save_data(args.output_file, results)
 
 def process_airport_file(file_path, _airport):
     try:
@@ -42,7 +42,6 @@ def process_airport_file(file_path, _airport):
     except OSError as ex:
         print(ex)
         pass
-
 
 def process_flight_file(file_path, _flight_per_country):
     '''
@@ -59,6 +58,16 @@ def process_flight_file(file_path, _flight_per_country):
         print(ex)
         pass
 
+def save_data(file_path, data):
+
+    try:
+        with open(file_path, 'w', newline='') as f:
+            writer = csv.writer(f)
+            writer.writerows(data)
+
+    except OSError as ex:
+        print(ex)
+        pass
 
 if __name__ == '__main__':
     main()
