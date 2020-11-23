@@ -25,8 +25,8 @@ def main():
         bqClient.load_file(os.path.join(directory, filename))
 
         # move files to bq_loaded_directory
-        # os.replace(os.path.join(directory, filename),
-        #            os.path.join(bq_loaded_directory, filename))
+        os.replace(os.path.join(directory, filename),
+                   os.path.join(bq_loaded_directory, filename))
 
         file_count += 1
 
@@ -40,7 +40,7 @@ class BqClient():
         # client = bigquery.Client()
         self.project_id = 'valiant-striker-272613'
         self.dataset_id = 'Flights'
-        self.table_id = 'Airports'
+        self.table_id = 'Routes'
         self.credentials = pydata_google_auth.get_user_credentials(
             ['https://www.googleapis.com/auth/bigquery'],)
         self.client = bigquery.Client(project=self.project_id,
@@ -50,14 +50,14 @@ class BqClient():
         self.table_ref = self.dataset_ref.table(self.table_id)
         self.job_config.write_disposition = bigquery.WriteDisposition.WRITE_APPEND
         # WRITE_TRUNCATE WRITE_APPEND WRITE_EMPTY
-        
+
         if type == 'csv' or type == 'dat':
             self.job_config.source_format = bigquery.SourceFormat.CSV
-        
+
         elif type == 'json':
             self.job_config.source_format = bigquery.SourceFormat.NEWLINE_DELIMITED_JSON
-        
-        else: 
+
+        else:
             self.job_config.source_format = bigquery.SourceFormat.AVRO
             self.job_config.use_avro_logical_types = True
 
