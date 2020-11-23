@@ -9,13 +9,12 @@ import sys
 def main():
     file_count = 0
     runnining_time = time.time()
-    fileformat = 'json'
-    #fileformat = 'avro'
-    directory = os.path.join('..', 'samplefiles', fileformat + 'files')
-    bq_loaded_directory = os.path.join('..', 'samplefiles', 'bq_loaded')
+    fileformat = 'dat'
+    directory = '235_new_files'
+    bq_loaded_directory = '335_loaded_files'
 
     bqClient = BqClient(type=fileformat)
-    max_files = 3
+    max_files = 30
     print('loanding files up to:', max_files)
     for filename in os.listdir(directory):
         if not fileformat in filename:
@@ -25,8 +24,9 @@ def main():
         print('loading:', filename)
         bqClient.load_file(os.path.join(directory, filename))
 
-        os.replace(os.path.join(directory, filename),
-                   os.path.join(bq_loaded_directory, filename))
+        # move files to bq_loaded_directory
+        # os.replace(os.path.join(directory, filename),
+        #            os.path.join(bq_loaded_directory, filename))
 
         file_count += 1
 
@@ -40,31 +40,26 @@ class BqClient():
         # client = bigquery.Client()
         self.project_id = 'valiant-striker-272613'
         self.dataset_id = 'Flights'
-        self.table_id = 'Routes'
+        self.table_id = 'Airports'
         self.credentials = pydata_google_auth.get_user_credentials(
             ['https://www.googleapis.com/auth/bigquery'],)
         self.client = bigquery.Client(project=self.project_id,
                                       credentials=self.credentials)
         self.dataset_ref = self.client.dataset(self.dataset_id)
         self.job_config = bigquery.LoadJobConfig()
-
-        if type == 'avro':
-            self.init_avro()
-        else:
-            self.init_json()
-
-    def init_avro(self):
         self.table_ref = self.dataset_ref.table(self.table_id)
         self.job_config.write_disposition = bigquery.WriteDisposition.WRITE_APPEND
         # WRITE_TRUNCATE WRITE_APPEND WRITE_EMPTY
-        self.job_config.source_format = bigquery.SourceFormat.AVRO
-        self.job_config.use_avro_logical_types = True
-
-    def init_json(self):
-        self.table_ref = self.dataset_ref.table(self.table_id)
-        self.job_config.write_disposition = bigquery.WriteDisposition.WRITE_APPEND
-        # WRITE_TRUNCATE WRITE_APPEND WRITE_EMPTY
-        self.job_config.source_format = bigquery.SourceFormat.NEWLINE_DELIMITED_JSON
+        
+        if type == 'csv' or type == 'dat':
+            self.job_config.source_format = bigquery.SourceFormat.CSV
+        
+        elif type == 'json':
+            self.job_config.source_format = bigquery.SourceFormat.NEWLINE_DELIMITED_JSON
+        
+        else: 
+            self.job_config.source_format = bigquery.SourceFormat.AVRO
+            self.job_config.use_avro_logical_types = True
 
     def load_file(self, file):
         with open(file, "rb") as source_file:
