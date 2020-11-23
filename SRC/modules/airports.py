@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
+import logging
 
 
 class AirportColumns:
+
     airport_id = 0
     name = 1
     city = 2
@@ -33,10 +35,17 @@ class Airport:
         and store in the airports dictionary
         '''
         # get row info
-        id = row[self.airport_col.airport_id]
-        country = row[self.airport_col.country]
-        iata = row[self.airport_col.iata]
-        icao = row[self.airport_col.icao]
-        self.airports_by_iata[iata] = country
-        self.airports_by_icao[icao] = country
-        self.airports_by_id[id] = country
+        try:
+            id = row[self.airport_col.airport_id]
+            country = row[self.airport_col.country]
+            iata = row[self.airport_col.iata]
+            icao = row[self.airport_col.icao]
+            self.airports_by_iata[iata] = country
+            self.airports_by_icao[icao] = country
+            self.airports_by_id[id] = country
+
+        except Exception as ex:
+            msg = f"{ex}. row: {row}"
+            logging.warning(msg)
+            pass
+
