@@ -12,10 +12,10 @@ from modules import country_flights
 class TestFlightPerCountry(unittest.TestCase):
 
     src_dir = os.path.dirname(os.path.realpath(__file__))
-    data_dir = os.path.join(src_dir, '..', '..', 'input_data')
+    data_dir = os.path.join(src_dir, 'test_data')
 
-    airports_file = os.path.join(data_dir, 'airports_test.dat')
-    flights_file = os.path.join(data_dir, 'routes_test.dat')
+    airports_file = os.path.join(data_dir, 'airports_test01.dat')
+    flights_file = os.path.join(data_dir, 'routes_test01.dat')
 
     def test_country_flight_files(self):
 
