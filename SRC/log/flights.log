@@ -1,0 +1,18 @@
+INFO: 2020-11-23 16:07:14,442: 23872: flights.py: main: Process started!
+WARNING: 2020-11-23 16:07:14,444: 23872: airports.py: process_airport_row: list index out of range. row: ['1', 'Goroka Airport', 'Goroka']
+WARNING: 2020-11-23 16:07:14,444: 23872: airports.py: process_airport_row: list index out of range. row: ['2', 'Madang Airport', 'Madang']
+INFO: 2020-11-23 16:07:14,624: 23872: flights.py: main: Process completed!
+INFO: 2020-11-23 16:11:24,189: 14100: flights.py: main: Process started!
+ERROR: 2020-11-23 16:11:24,357: 14100: flights.py: save_data: [Errno 2] No such file or directory: '..\\output_datax\\output.csv'
+INFO: 2020-11-23 16:12:07,392: 28552: flights.py: main: Process started!
+ERROR: 2020-11-23 16:12:07,442: 28552: flights.py: process_flight_file: [Errno 2] No such file or directory: 'C:\\Users\\MarioLoeraLozano\\Dropbox\\data-engineer-assignment-master\\src\\..\\input_data\\routes.XXX'
+INFO: 2020-11-23 16:12:27,557: 25100: flights.py: main: Process started!
+ERROR: 2020-11-23 16:12:27,558: 25100: flights.py: process_airport_file: [Errno 2] No such file or directory: 'C:\\Users\\MarioLoeraLozano\\Dropbox\\data-engineer-assignment-master\\src\\..\\input_data\\airports.XXX'
+INFO: 2020-11-23 16:46:17,511: 29304: flights.py: main: Process started!
+WARNING: 2020-11-23 16:46:17,539: 29304: country_flights.py: process_flight: list index out of range. row: ['2B', '410', 'AER', '2965']
+INFO: 2020-11-23 16:46:17,679: 29304: flights.py: main: Process completed!
+INFO: 2020-11-23 16:54:14,128: 19152: flights.py: main: Process started!
+WARNING: 2020-11-23 16:54:14,154: 19152: country_flights.py: process_flight: list index out of range. row: ['2B', '410', 'GYD', '2922']
+INFO: 2020-11-23 16:54:14,292: 19152: flights.py: main: Process completed!
+INFO: 2020-11-23 17:00:16,479: 25720: flights.py: main: Process started!
+INFO: 2020-11-23 17:00:16,644: 25720: flights.py: main: Process completed!

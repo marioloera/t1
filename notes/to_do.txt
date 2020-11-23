@@ -1,0 +1,15 @@
+TO DO: ideas
+
+* system requirements python version
+
+* profiling
+
+* get country for the airport using airport id too
+
+* check data quality
+
+* extension
+    new files, vs modify files -> delta loads
+    new output: airline, domestic_flights, international_flights
+
+* auto-import data to in BigQuery

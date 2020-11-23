@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import logging
 
 
 class RoutesColumns:
@@ -16,7 +17,7 @@ class RoutesColumns:
 class FlightPerCountry:
 
     def __init__(self, airports_by_iata):
-        # TODO receive airports_by_id, airports_by_icao
+        # TODO add arguments airports_by_id and airports_by_icao dictionaries
         self.airports_by_iata = airports_by_iata
         self.countries = {}
         self.unknown_country = "unknown"
@@ -26,7 +27,7 @@ class FlightPerCountry:
 
     def get_results_format1(self):
         """
-        return an list of list:
+        return a list of list:
         [[country, domestic flights, international_fligthts],]
         in alphabetical order
         """
@@ -37,49 +38,65 @@ class FlightPerCountry:
 
     def process_flight(self, row):
         '''
-        Procees each flight, get the airport countries
-        and add domestic or international flight to the countries dictionary 
-        fro the source country.
-        unknown airport will be add to the unknown country record
+        Process each flight, get the airport countries
+        and add the number of domestic and international flights to the countries dictionary 
+        from the source country.
+        The flights where the source or destination airports are
+        missing in airports_by_iata dictionary will be added to the unknown country record
         '''
         # get row info
-        source_airport = row[self.routes_col.source_airport]
-        source_airport_id = row[self.routes_col.source_airport_id]
-        destination_airport = row[self.routes_col.destination_airport]
-        destination_airport_id = row[self.routes_col.destination_airport_id]
+        try:
+            source_airport = row[self.routes_col.source_airport]
+            destination_airport = row[self.routes_col.destination_airport]
+            # source_airport_id = row[self.routes_col.source_airport_id]
+            # destination_airport_id = row[self.routes_col.destination_airport_id]
 
-        # get countries
-        source_country = self.get_airport_country(airport_code=source_airport)
-        destination_country = self.get_airport_country(
-            airport_code=destination_airport)
+            # get countries
+            source_country = self.get_airport_country(
+                airport_code=source_airport)
+            destination_country = self.get_airport_country(
+                airport_code=destination_airport)
 
-        # check if is domestic or international flight
-        domestic_flight = 1
-        international_flight = 0
-        if (source_country != destination_country):
-            domestic_flight = 0
-            international_flight = 1
+            # check if is domestic or international flight
+            domestic_flight = 1
+            international_flight = 0
+            if (source_country != destination_country):
+                domestic_flight = 0
+                international_flight = 1
 
-        # unknow destination will be add to unknow country count
-        if destination_country == self.unknown_country:
-            source_country = self.unknown_country
+            # unknown destination will be added to unknown country count
+            if destination_country == self.unknown_country:
+                source_country = self.unknown_country
 
-        # add country to countries dictionary
-        if source_country not in self.countries:
-            self.countries[source_country] = [0, 0]
+            # add country to countries dictionary
+            if source_country not in self.countries:
+                self.countries[source_country] = [0, 0]
 
-        # add flights to countries
-        self.countries[source_country][0] += domestic_flight
-        self.countries[source_country][1] += international_flight
+            # add flights to countries
+            self.countries[source_country][0] += domestic_flight
+            self.countries[source_country][1] += international_flight
+
+        except Exception as ex:
+            msg = f"{ex}. row: {row}"
+            logging.warning(msg)
+            pass
 
     def get_airport_country(self, airport_code=None, airport_id=None):
         '''
-        return the country for airport.
-        frist checking the ariport_code in the iata dictionary, 
-        
-        # TODO then airport_id in the airport id dictionary,
-        # TODO last airport_code in the icao dictionary.
+        Return the country for the airport
+        by checking the airport_code in the iata dictionary, 
         if not found then return unknown_country variable.
         '''
         country = self.airports_by_iata.get(airport_code, self.unknown_country)
+        '''
+        TODO Test: when IATA code not found:
+            use airport_id in the airport id dictionary
+            or use airport_code in the ICAO dictionary.
+        
+        if country == self.unknown_country:
+            country = self.airports_by_id.get(airport_id, self.unknown_country)
+        
+            if country == self.unknown_country:
+                country = self.airports_by_icao.get(airport_code, self.unknown_country)
+        '''
         return country

@@ -1,8 +1,0 @@
-* auto import data to in BigQuery
-* system requirements python version
-* loging
-* profiling
-* get country for airport using airportid too
-* extension
-    airline information,
-    new files, vs modify files -> delta loads

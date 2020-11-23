@@ -1,0 +1,25 @@
+Process:
+
+Read problem definition
+
+Read the documentation
+
+Re-read problem definition
+
+First ideas, data structures, dictionaries, modules
+
+Check data, easy to import to BigQuery:
+    check values missing, which airport code to use, better to use IATA
+
+Coding: 
+    1st monolith
+    query in bigquery, same results
+    modules
+    unit test
+    improvements, fix typo
+    logging
+
+Conclusions:
+    Assignment motivates me to do the best you can.
+    Improve current skills.
+    Learn new things.

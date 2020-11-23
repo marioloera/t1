@@ -1,0 +1,21 @@
+Scale-up: for many input flight files:
+
+* move new files to new_input dir
+
+* process each file in the new_input dir in parallel
+
+* each input file will produce one output file in new_output dir
+
+* move input file to processed_input dir
+
+* A New script to process files in new_output dir
+    and add data to acc_output file
+
+* move output files to processed_output dir
+
+e. g.
+    input_file1 -> output_file1 = [['Sweden', 100, 50]]
+    output_file1 -> acc_output = [['Sweden', 100, 50]]
+
+    input_fileN -> output_fileN = [['USA', 200, 30], ['Sweden', 77, 5]]
+    output_fileN -> acc_output = [['USA', 200, 30], ['Sweden', 177, 55]]
