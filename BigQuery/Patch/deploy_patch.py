@@ -62,8 +62,10 @@ class BqClient():
     def __init__(self):
 
         self.project_id = 'valiant-striker-272613'
-        self.credentials = pydata_google_auth.get_user_credentials(
-            ['https://www.googleapis.com/auth/bigquery'],)
+        scopes =  [
+            'https://www.googleapis.com/auth/bigquery',
+        ]
+        self.credentials = pydata_google_auth.get_user_credentials(scopes, )
         self.client = bigquery.Client(project=self.project_id,
                                       credentials=self.credentials)
         print('*************** bq init ***************')

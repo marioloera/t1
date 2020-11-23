@@ -41,8 +41,10 @@ class BqClient():
         self.project_id = 'valiant-striker-272613'
         self.dataset_id = 'Flights'
         self.table_id = 'Routes'
-        self.credentials = pydata_google_auth.get_user_credentials(
-            ['https://www.googleapis.com/auth/bigquery'],)
+        scopes =  [
+            'https://www.googleapis.com/auth/bigquery',
+        ]
+        self.credentials = pydata_google_auth.get_user_credentials(scopes,)
         self.client = bigquery.Client(project=self.project_id,
                                       credentials=self.credentials)
         self.dataset_ref = self.client.dataset(self.dataset_id)
