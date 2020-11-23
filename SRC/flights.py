@@ -1,12 +1,25 @@
 #!/usr/bin/env python3
 import os
 import csv
+import logging
+import argparse
 from modules import airports
 from modules import country_flights
-import argparse
 
 
 def main():
+
+    # go to src dir
+    src_dir = os.path.dirname(os.path.realpath(__file__))
+
+    # declare log file
+    logging.basicConfig(
+        filename=os.path.join(src_dir, 'log', 'flights.log'),
+        format=
+        '%(levelname)s: %(asctime)s: %(process)d: %(filename)s: %(funcName)s: %(message)s',
+        level=logging.INFO,
+    )
+    logging.info(f'Process started!')
 
     # output file
     parser = argparse.ArgumentParser()
@@ -14,7 +27,7 @@ def main():
                         help="output file where results are stored")
     args = parser.parse_args()
 
-    src_dir = os.path.dirname(os.path.realpath(__file__))
+    # input_data dir
     data_dir = os.path.join(src_dir, '..', 'input_data')
 
     # process airports
@@ -32,6 +45,10 @@ def main():
     results = flight_per_country.get_results_format1()
     save_data(args.output_file, results)
 
+    msg = f'Process completed!'
+    logging.info(msg)
+    print(msg)
+
 
 def process_airport_file(file_path, _airport):
     try:
@@ -41,8 +58,8 @@ def process_airport_file(file_path, _airport):
                 _airport.process_airport_row(row)
 
     except OSError as ex:
-        print(ex)
-        pass
+        logging.error(ex)
+        raise
 
 
 def process_flight_file(file_path, _flight_per_country):
@@ -56,9 +73,10 @@ def process_flight_file(file_path, _flight_per_country):
             reader = csv.reader(f)
             for row in reader:
                 _flight_per_country.process_flight(row)
+
     except OSError as ex:
-        print(ex)
-        pass
+        logging.error(ex)
+        raise
 
 
 def save_data(file_path, data):
@@ -69,10 +87,9 @@ def save_data(file_path, data):
             writer.writerows(data)
 
     except OSError as ex:
-        print(ex)
-        pass
+        logging.error(ex)
+        raise
 
 
 if __name__ == '__main__':
     main()
-    print('process completed!')
