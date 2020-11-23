@@ -60,7 +60,7 @@ class FlightPerCountry:
             domestic_flight = 0
             international_flight = 1
 
-        # unknow destination will be add to unknow country count
+        # unknown destination will be added to unknown country count
         if destination_country == self.unknown_country:
             source_country = self.unknown_country
 
@@ -74,12 +74,21 @@ class FlightPerCountry:
 
     def get_airport_country(self, airport_code=None, airport_id=None):
         '''
-        return the country for airport.
-        frist checking the ariport_code in the iata dictionary, 
-        
-        # TODO then airport_id in the airport id dictionary,
-        # TODO last airport_code in the icao dictionary.
+        return the country for airport
+        by checking the airport_code in the iata dictionary, 
         if not found then return unknown_country variable.
         '''
         country = self.airports_by_iata.get(airport_code, self.unknown_country)
+
+        '''
+        TODO Test when iata code not found:
+            use airport_id in the airport id dictionary
+            or use airport_code in the icao dictionary.
+        
+        if country == self.unknown_country:
+            country = self.airports_by_id.get(airport_id, self.unknown_country)
+        
+            if country == self.unknown_country:
+                country = self.airports_by_icao.get(airport_code, self.unknown_country)
+        '''
         return country
