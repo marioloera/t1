@@ -48,4 +48,3 @@ class Airport:
             msg = f"{ex}. row: {row}"
             logging.warning(msg)
             pass
-
