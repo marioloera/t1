@@ -19,7 +19,7 @@ class TestFlightPerCountry(unittest.TestCase):
         687: "Sweden",
         3484: "United States",
         3559: "United States",
-        -2: "Mexico"
+        -2: "Mexico",
     }
 
     FlightDataA = [
@@ -45,12 +45,14 @@ class TestFlightPerCountry(unittest.TestCase):
     def test_get_airport_country_mix(self):
         flightPerCountry = country_flights.FlightPerCountry(
             airports_by_iata=self.IataCountry,
-            airports_by_id=self.AirpotIdCountry)
+            airports_by_id=self.AirpotIdCountry,
+        )
         expected = self.IataCountry
         result = {}
         for iata in self.IataCountry:
             result[iata] = flightPerCountry.get_airport_country(
-                airport_code=iata)
+                airport_code=iata
+            )
         self.assertEqual(result, expected)
 
     def test_get_unknown_country(self):
@@ -82,20 +84,21 @@ class TestFlightPerCountry(unittest.TestCase):
         self.assertEqual(result, expected)
 
     def test_get_country_flights_2(self):
-        """  this can check partial results, order not important
-            for example United States is exluded in the test 
-            but is pressent in the flightPerCountry.countries
-            include airport without iata code and airportid(-2) Mexico
+        """this can check partial results, order not important
+        for example United States is exluded in the test
+        but is pressent in the flightPerCountry.countries
+        include airport without iata code and airportid(-2) Mexico
         """
         flightPerCountry = country_flights.FlightPerCountry(
             airports_by_iata=self.IataCountry,
-            airports_by_id=self.AirpotIdCountry)
+            airports_by_id=self.AirpotIdCountry,
+        )
 
         expected = {
             flightPerCountry.unknown_country: [0, 2],
             "United States": [1, 1],
             "Sweden": [1, 1],
-            "Mexico": [0, 1]
+            "Mexico": [0, 1],
         }
 
         for row in self.FlightDataA:
