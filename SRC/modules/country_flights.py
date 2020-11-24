@@ -15,10 +15,10 @@ class RoutesColumns:
 
 
 class FlightPerCountry:
-    def __init__(self, airports_by_iata, airpots_by_id={}):
+    def __init__(self, airports_by_iata, airports_by_id={}):
         # TODO add arguments airports_by_id and airports_by_icao dictionaries
         self.airports_by_iata = airports_by_iata
-        self.airports_by_id = airpots_by_id
+        self.airports_by_id = airports_by_id
         self.countries = {}
         self.unknown_country = "unknown"
         # {country:[domestic_flight, international_flight]}
