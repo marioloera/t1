@@ -41,6 +41,16 @@ class TestFlightPerCountry(unittest.TestCase):
             )
         self.assertEqual(result, expected)
 
+    def test_get_airport_country_mix(self):
+        flightPerCountry = country_flights.FlightPerCountry(airports_by_iata=self.IataCountry,
+                                                            airports_by_id=self.AirpotIdCountry)
+        expected = self.IataCountry
+        result = {}
+        for iata in self.IataCountry:
+            result[iata] = flightPerCountry.get_airport_country(
+                airport_code=iata)
+        self.assertEqual(result, expected)
+
     def test_get_unknown_country(self):
         flightPerCountry = country_flights.FlightPerCountry({})
         expected = flightPerCountry.unknown_country
