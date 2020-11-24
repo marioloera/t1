@@ -15,9 +15,10 @@ class RoutesColumns:
 
 
 class FlightPerCountry:
-    def __init__(self, airports_by_iata):
+    def __init__(self, airports_by_iata, airpots_by_id={}):
         # TODO add arguments airports_by_id and airports_by_icao dictionaries
         self.airports_by_iata = airports_by_iata
+        self.airports_by_id = airpots_by_id
         self.countries = {}
         self.unknown_country = "unknown"
         # {country:[domestic_flight, international_flight]}
@@ -50,16 +51,19 @@ class FlightPerCountry:
         try:
             source_airport = row[self.routes_col.source_airport]
             destination_airport = row[self.routes_col.destination_airport]
-            # source_airport_id = row[self.routes_col.source_airport_id]
-            # destination_airport_id =
-            # row[self.routes_col.destination_airport_id]
+            source_airport_id = row[self.routes_col.source_airport_id]
+            destination_airport_id = row[
+                self.routes_col.destination_airport_id
+            ]
 
             # get countries
             source_country = self.get_airport_country(
-                airport_code=source_airport
+                airport_code=source_airport, airport_id=source_airport_id
             )
+
             destination_country = self.get_airport_country(
-                airport_code=destination_airport
+                airport_code=destination_airport,
+                airport_id=destination_airport_id,
             )
 
             # check if is domestic or international flight
@@ -93,14 +97,13 @@ class FlightPerCountry:
         if not found then return unknown_country variable.
         """
         country = self.airports_by_iata.get(airport_code, self.unknown_country)
+
+        if country == self.unknown_country:
+            country = self.airports_by_id.get(airport_id, self.unknown_country)
         """
         TODO Test: when IATA code not found:
             use airport_id in the airport id dictionary
             or use airport_code in the ICAO dictionary.
-
-        if country == self.unknown_country:
-            country = self.airports_by_id.get(airport_id, self.unknown_country)
-
             if country == self.unknown_country:
                 country = self.airports_by_icao.get(
                     airport_code, self.unknown_country)
