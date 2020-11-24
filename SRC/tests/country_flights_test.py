@@ -19,6 +19,7 @@ class TestFlightPerCountry(unittest.TestCase):
         687: "Sweden",
         3484: "United States",
         3559: "United States",
+        -2: "Mexico"
     }
 
     FlightDataA = [
@@ -27,7 +28,7 @@ class TestFlightPerCountry(unittest.TestCase):
         (00, 410, "LAX", 2965, "GOT", 687, 0, 0, 135),
         (00, 410, "LAX", 2966, "ELP", 3559, 0, 0, 135),
         (00, 410, "LAX", 2966, "XXX", -1, 0, 0, 135),
-        (00, 410, "XXX", -1, "ELP", 3559, 0, 0, 135),
+        (00, 410, "ZZZ", -2, "ELP", 3559, 0, 0, 135),
         (00, 410, "XXX", -1, "YYY", -2, 0, 0, 135),
     ]
 
@@ -42,8 +43,9 @@ class TestFlightPerCountry(unittest.TestCase):
         self.assertEqual(result, expected)
 
     def test_get_airport_country_mix(self):
-        flightPerCountry = country_flights.FlightPerCountry(airports_by_iata=self.IataCountry,
-                                                            airports_by_id=self.AirpotIdCountry)
+        flightPerCountry = country_flights.FlightPerCountry(
+            airports_by_iata=self.IataCountry,
+            airports_by_id=self.AirpotIdCountry)
         expected = self.IataCountry
         result = {}
         for iata in self.IataCountry:
@@ -68,6 +70,32 @@ class TestFlightPerCountry(unittest.TestCase):
             flightPerCountry.unknown_country: [1, 2],
             # "United States": [1, 1],
             "Sweden": [1, 1],
+        }
+
+        for row in self.FlightDataA:
+            flightPerCountry.process_flight(row)
+
+        result = {}
+        for country in expected:
+            result[country] = flightPerCountry.countries[country]
+
+        self.assertEqual(result, expected)
+
+    def test_get_country_flights_2(self):
+        """  this can check partial results, order not important
+            for example United States is exluded in the test 
+            but is pressent in the flightPerCountry.countries
+            include airport without iata code and airportid(-2) Mexico
+        """
+        flightPerCountry = country_flights.FlightPerCountry(
+            airports_by_iata=self.IataCountry,
+            airports_by_id=self.AirpotIdCountry)
+
+        expected = {
+            flightPerCountry.unknown_country: [0, 2],
+            "United States": [1, 1],
+            "Sweden": [1, 1],
+            "Mexico": [0, 1]
         }
 
         for row in self.FlightDataA:
