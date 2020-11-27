@@ -45,7 +45,8 @@ def main():
     flights_df_all = pd.read_csv(flights_file, names=flights_col.__list__)
 
     # remove columns not needed so the join contains less columns
-    flights_df = flights_df_all.iloc[9:15, [
+    #flights_df = flights_df_all.iloc[9:15, [
+    flights_df = flights_df_all.iloc[:, [
         flights_col.source_airport,
         flights_col.destination_airport,
     ]]
@@ -80,10 +81,10 @@ def main():
                       right_on='iata',
                       suffixes=('_src', '_dest'))
 
-    print('\nsrc2\n')
+    #print('\nsrc2\n')
     #print(src2)
     #print(src2.columns)
-    print(src2[['country_src', 'country_dest']])
+    #print(src2[['country_src', 'country_dest']])
 
     # add domestic or international
 
@@ -98,14 +99,18 @@ def main():
     src2['international'] = src2.apply(fn_international, axis=1)
 
     # df1.iloc[1:5, 2:4]
-    print(src2.iloc[:, 2:])
+    #print(src2.iloc[:, 2:])
 
     # get country agregates
     countries_df = src2.groupby(['country_src']).agg({
         'domestic': 'sum',
         'international': 'sum'
     })
-    print(countries_df)
+    #print(countries_df)
+    output_file = os.path.join(src_dir, '..', 'output_data', 'output_pd.csv')
+    #countries_df.to_csv(output_file, index=False)
+    #print(countries_df.to_csv(header=None, index=True))
+    countries_df.to_csv(output_file, header=None, index=True)
 
     msg = f'Process completed!'
     # logging.info(msg)
