@@ -21,8 +21,10 @@ class Country:
 
         return results
 
-    def process_flight(self, source_country, destination_country):
-
+    def add_flight(self, source_country, destination_country):
+        '''
+            add to dic countries the domestic and internation flight increment
+        '''
         try:
 
             # check if is domestic or international flight

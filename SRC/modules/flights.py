@@ -23,11 +23,9 @@ class Flights:
         self.flight_col = FlightColumns()
         self.unknown_country = "unknown"
 
-    def process_flight(self, row):
+    def get_countries(self, row):
         '''
-        Process each flight, get the airport countries
-        and add the number of domestic and international flights to the countries dictionary 
-        from the source country.
+        Process each flight, get the source and destination countries
         The flights where the source or destination airports are
         missing in airports_by_iata dictionary will be added to the unknown country record
         '''

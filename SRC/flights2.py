@@ -66,16 +66,18 @@ def process_airport_file(file_path, _airport):
 def process_flight_file(file_path, flights, country):
     '''
     process the csv data in the file
-    and call the function process_flight to get the
-    domestic and international flights for each country
+    and call the function flights.process_flight to get the source 
+    and destianation countries,
+    then call function country.add_flight(source_country, destinantion country)
+    and will add to the country.countries
     '''
     x = 0 
     try:
         with open(file_path, 'r', encoding='UTF-8') as f:
             reader = csv.reader(f)
             for row in reader:
-                src, dest = flights.process_flight(row)
-                country.process_flight(src, dest)
+                source_country, destination_country = flights.get_countries(row)
+                country.add_flight(source_country, destination_country)
 
     except OSError as ex:
         logging.error(ex)
