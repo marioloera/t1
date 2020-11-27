@@ -5,6 +5,7 @@ import logging
 import argparse
 import pandas as pd
 from modules import airports
+from modules import flights
 
 
 def main():
@@ -34,21 +35,55 @@ def main():
 
     # airport & flights columns class
     airports_col = airports.AirportColumns()
-    # flights_col
+    flights_col = flights.FlightsColumns()
     # print(airports_col.__list__) # object
 
     # create dataframes from csv input files
     # airports_df = pd.read_csv(airports_file)
     # airports_df = pd.read_csv(airports_file, header=None)
-    airports_df = pd.read_csv(airports_file, names=airports_col.__list__)
-    print(airports_df[0:5])
+    airports_df_all = pd.read_csv(airports_file, names=airports_col.__list__)
+    flights_df_all = pd.read_csv(flights_file, names=flights_col.__list__)
 
-    # fligths_df = pd.read_csv(flights_file, header=False)
-    # print(airports_df)
-    # print(fligths_df)
+    # remove columns not needed so the join contains less columns
+    flights_df = flights_df_all[0:10]
+    flights_df = flights_df_all.iloc[:, [
+        flights_col.source_airport,
+        flights_col.destination_airport,
+    ]]
 
-    # process airports
+    airports_df = airports_df_all.iloc[:, [
+        airports_col.iata,
+        airports_col.country,
+    ]]
 
+    # normal extraction
+    # for i, flight_row in flights_df.iterrows():
+    #     source_airport = flight_row[flights_col.source_airport]
+    #     destination_airport = flight_row[flights_col.destination_airport]
+    #     print(i, source_airport, source_airport_id, destination_airport,
+    #           destination_airport_id)
+
+    # pands merge by col names
+    src1 = flights_df.merge(airports_df,
+                            left_on='source_airport',
+                            right_on='iata')
+
+    print('\nsrc1\n')
+    print(src1)
+    print(src1.columns)
+    # x2 = flights_df.merge(airports_df, left_on=flights_df.columns[flights_col.source_airport], right_on=airports_df.columns[airports_col.iata])
+    # print(x2)
+
+    print(src1[['source_airport', 'destination_airport', 'country']])
+
+    src2 = src1.merge(airports_df,
+                      left_on='destination_airport',
+                      right_on='iata')
+
+    print('\nsrc2\n')
+    print(src2)
+    print(src2.columns)
+    #print(src2[['airline', 'airline_id', 'country']])
     msg = f'Process completed!'
     # logging.info(msg)
     print(msg)
