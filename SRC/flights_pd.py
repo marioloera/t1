@@ -100,7 +100,12 @@ def main():
     # df1.iloc[1:5, 2:4]
     print(src2.iloc[:, 2:])
 
-    # TODO group by country_src, sum domestic, sum (international)
+    # get country agregates
+    countries_df = src2.groupby(['country_src']).agg({
+        'domestic': 'sum',
+        'international': 'sum'
+    })
+    print(countries_df)
 
     msg = f'Process completed!'
     # logging.info(msg)
