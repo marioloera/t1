@@ -32,12 +32,10 @@ def main():
     airports_file = os.path.join(data_dir, 'airports.dat')
     flights_file = os.path.join(data_dir, 'routes.dat')
 
-
     # airport & flights columns class
     airports_col = airports.AirportColumns()
-    # flights_col 
+    # flights_col
     # print(airports_col.__list__) # object
-
 
     # create dataframes from csv input files
     # airports_df = pd.read_csv(airports_file)
@@ -45,15 +43,9 @@ def main():
     airports_df = pd.read_csv(airports_file, names=airports_col.__list__)
     print(airports_df[0:5])
 
-
-
     # fligths_df = pd.read_csv(flights_file, header=False)
     # print(airports_df)
     # print(fligths_df)
-
-
-
-
 
     # process airports
 
