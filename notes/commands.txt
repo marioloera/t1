@@ -1,6 +1,15 @@
 
 run in src
 python flights.py ..\output_data\output.csv
+flights.py ..\output_data\output.csv
+
+to measure time in unix or windows git bash:
+time python flights.py ..\output_data\output.csv
+
+profile using cProfile:
+python -m cProfile flights.py ..\output_data\output.csv
+python -m cProfile -o ..\output_data\flights_profile.out flights.py ..\output_data\output.csv
+python -m cProfile -o ..\output_data\flights_pd_profile.out flights_pd.py ..\output_data\output_pd.csv
 
 in src (will run \test\test_*.py)
     python -m unittest
