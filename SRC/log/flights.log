@@ -16,3 +16,7 @@ WARNING: 2020-11-23 16:54:14,154: 19152: country_flights.py: process_flight: lis
 INFO: 2020-11-23 16:54:14,292: 19152: flights.py: main: Process completed!
 INFO: 2020-11-23 17:00:16,479: 25720: flights.py: main: Process started!
 INFO: 2020-11-23 17:00:16,644: 25720: flights.py: main: Process completed!
+INFO: 2020-11-28 16:04:23,098: 3656: flights_pd.py: main: Process started!
+INFO: 2020-11-28 16:04:24,819: 3656: flights_pd.py: main: Process completed!
+INFO: 2020-11-28 16:05:40,170: 11916: flights.py: main: Process started!
+INFO: 2020-11-28 16:05:40,322: 11916: flights.py: main: Process completed!
