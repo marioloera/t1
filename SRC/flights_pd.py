@@ -43,7 +43,7 @@ def main():
 
     # remove columns not needed so the join contains less columns
     # flights_df = flights_df_all.iloc[9:15, [
-    flights_df = flights_df_all.iloc[:, [
+    flights_df = flights_df_all.iloc[0:-1, [
         flights_col.source_airport,
         flights_col.destination_airport,
     ]]
@@ -67,18 +67,25 @@ def main():
 
     # get domestic and international columns
     fn_domestic = lambda row: 1 if row.country_src == row.country_dest else 0
-    fn_international = lambda row: 1 if row.country_src != row.country_dest else 0
     src2['domestic'] = src2.apply(fn_domestic, axis=1)
-    src2['international'] = src2.apply(fn_international, axis=1)
+    # expensive operation, just do it ones, and get the internation from count - domestic
+    #fn_international = lambda row: 1 if row.country_src != row.country_dest else 0
+    #src2['international'] = src2.apply(fn_international, axis=1)
 
-    # get country agregates
-    countries_df = src2.groupby(['country_src']).agg({
+    countries_df = (src2.groupby(['country_src']).agg({
+        'country_src': 'count',
         'domestic': 'sum',
-        'international': 'sum'
-    })
+    }).rename(columns={'country_src': 'total_flights'}))
 
+    fn_international = lambda row: row.total_flights - row.domestic
+    countries_df['international'] = countries_df.apply(fn_international, axis=1)
+
+    # print(countries_df[0:3])
     # save results
-    countries_df.to_csv(args.output_file, header=None, index=True)
+    countries_df.loc[:, [
+        'domestic',
+        'international',
+    ]].to_csv(args.output_file, header=None, index=True)
 
     msg = f'Process completed!'
     logging.info(msg)
