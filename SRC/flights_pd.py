@@ -43,7 +43,7 @@ def main():
 
     # remove columns not needed so the join contains less columns
     # flights_df = flights_df_all.iloc[9:15, [
-    flights_df = flights_df_all.iloc[0:-1, [
+    flights_df = flights_df_all.iloc[:, [
         flights_col.source_airport,
         flights_col.destination_airport,
     ]]
@@ -54,16 +54,24 @@ def main():
     ]]
 
     # pands merge flights.source_airport airport.iata to get country
-    src1 = flights_df.merge(airports_df,
-                            left_on='source_airport',
-                            right_on='iata')
+    src1 = flights_df.merge(
+        airports_df,
+        # how='left',
+        left_on='source_airport',
+        right_on='iata')
 
     # pands merge src1 = flights.destination_airport airport.iata to get country
     # need to add suffixes becouse repeting columns names from airport
-    src2 = src1.merge(airports_df,
-                      left_on='destination_airport',
-                      right_on='iata',
-                      suffixes=('_src', '_dest'))
+    src2 = src1.merge(
+        airports_df,
+        # how='left',
+        left_on='destination_airport',
+        right_on='iata',
+        suffixes=('_src', '_dest'))
+
+    # # fill null source and destinantion country
+    # src2['country_src'] = src2['country_src'].fillna('unknown')
+    # src2['country_dest'] = src2['country_dest'].fillna('unknown')
 
     # get domestic and international columns
     fn_domestic = lambda row: 1 if row.country_src == row.country_dest else 0
@@ -78,9 +86,9 @@ def main():
     }).rename(columns={'country_src': 'total_flights'}))
 
     fn_international = lambda row: row.total_flights - row.domestic
-    countries_df['international'] = countries_df.apply(fn_international, axis=1)
+    countries_df['international'] = countries_df.apply(fn_international,
+                                                       axis=1)
 
-    # print(countries_df[0:3])
     # save results
     countries_df.loc[:, [
         'domestic',
