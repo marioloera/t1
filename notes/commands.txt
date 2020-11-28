@@ -4,8 +4,8 @@ python flights.py ..\output_data\output.csv
 flights.py ..\output_data\output.csv
 
 to measure time in unix or windows git bash:
-time python flights.py ..\output_data\output.csv
-time python flights_pd.py ..\output_data\output_pd.csv
+time python flights.py ../output_data/output.csv
+time python flights_pd.py ../output_data/output_pd.csv
 
 profile using cProfile:
 python -m cProfile flights.py ..\output_data\output.csv
