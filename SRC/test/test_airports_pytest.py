@@ -30,7 +30,7 @@ def test_airports_by_id():
         (id1, airport1.airports_by_id[id1]),
         (id2, airport1.airports_by_id[id2]),
     ]
-    assert(result, expected)
+    assert result == expected
 
 def test_airports_by_iata():
     airport1 = airports.Airport()
@@ -46,7 +46,7 @@ def test_airports_by_iata():
         (Iata1, airport1.airports_by_iata[Iata1]),
         (Iata2, airport1.airports_by_iata[Iata2]),
     ]
-    assert(result, expected)
+    assert result == expected
 
 def test_airports_by_icao():
     airport1 = airports.Airport()
@@ -62,4 +62,4 @@ def test_airports_by_icao():
         (icao1, airport1.airports_by_icao[icao1]),
         (icao2, airport1.airports_by_icao[icao2]),
     ]
-    assert(result, expected)
+    assert result == expected
