@@ -5,16 +5,15 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__),
                                                 '..')))
 from modules import airports
 
-
-
 AirportData1 = [
-    (3484, "Los Angeles International Airport", "Los Angeles",
-        "United States", "LAX", "KLAX", 33.94250107, -118.4079971, 125, -8,
-        "A", "America/Los_Angeles", "airport", "OurAirports"),
+    (3484, "Los Angeles International Airport", "Los Angeles", "United States",
+     "LAX", "KLAX", 33.94250107, -118.4079971, 125, -8, "A",
+     "America/Los_Angeles", "airport", "OurAirports"),
     (737, "Stockholm-Arlanda Airport", "Stockholm", "Sweden", "ARN", "ESSA",
-        59.651901245117, 17.918600082397, 137, 1, "E", "Europe/Stockholm",
-        "airport", "OurAirports"),
+     59.651901245117, 17.918600082397, 137, 1, "E", "Europe/Stockholm",
+     "airport", "OurAirports"),
 ]
+
 
 def test_airports_by_id():
     airport1 = airports.Airport()
@@ -32,6 +31,7 @@ def test_airports_by_id():
     ]
     assert result == expected
 
+
 def test_airports_by_iata():
     airport1 = airports.Airport()
     for row in AirportData1:
@@ -47,6 +47,7 @@ def test_airports_by_iata():
         (Iata2, airport1.airports_by_iata[Iata2]),
     ]
     assert result == expected
+
 
 def test_airports_by_icao():
     airport1 = airports.Airport()
