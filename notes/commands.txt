@@ -14,7 +14,7 @@ python -m cProfile -o ..\output_data\flights_pd_profile.out flights_pd.py ..\out
 
 in src (will run \test\test_*.py)
     python -m unittest
-
+    python -m pytest
 yapf formating:
 linux or git bash
 find . -name '*.py' -print0 | xargs -0 yapf -i
