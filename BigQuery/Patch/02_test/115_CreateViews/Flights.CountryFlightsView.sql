@@ -7,13 +7,13 @@ WITH
     ),
 
   CteFlights AS (
-    /*  
+    /*
     Get SourceCountry, DestinationCountry Per flight
     */
     SELECT
       COALESCE(Source.Country, CteUnkownCountry.UnkownCountry) AS SourceCountry,
       COALESCE(Destination.Country, CteUnkownCountry.UnkownCountry) AS DestinationCountry
-    
+
     FROM Flights.Routes, CteUnkownCountry
 
       LEFT JOIN Flights.Airports AS Source
@@ -22,7 +22,7 @@ WITH
       LEFT JOIN Flights.Airports AS Destination
         ON Routes.DestinationAirport = Destination.IATA
     ),
-  
+
   CteCountryFlights AS (
     /*
       determine if a flight is domestic or internationl
@@ -39,6 +39,6 @@ WITH
     GROUP BY 1
     )
 
-SELECT * 
+SELECT *
 FROM CteCountryFlights
 ORDER BY Country;

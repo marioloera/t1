@@ -31,7 +31,7 @@ class Airport:
 
     def process_airport_row(self, row):
         '''
-        Process each airport to get the country 
+        Process each airport to get the country
         and store in the airports dictionary
         '''
         # get row info

@@ -52,7 +52,7 @@ class TestFlightPerCountry(unittest.TestCase):
 
     def test_get_country_flights(self):
         """  this can check partial results, order not important
-            for example United States is exluded in the test 
+            for example United States is exluded in the test
             but is pressent in the flightPerCountry.countries
         """
         flightPerCountry = country_flights.FlightPerCountry(self.IataCountry)
