@@ -20,8 +20,9 @@ class AirportColumns:
     source = 13
 
     __list__ = [
-        name for name in tuple(locals())
-        if not (name.startswith('__') and name.endswith('__'))
+        name
+        for name in tuple(locals())
+        if not (name.startswith("__") and name.endswith("__"))
     ]
 
 

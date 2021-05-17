@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-import logging
 
 
 class FlightsColumns:
@@ -15,6 +14,7 @@ class FlightsColumns:
     equipment = 8
 
     __list__ = [
-        name for name in tuple(locals())
-        if not (name.startswith('__') and name.endswith('__'))
+        name
+        for name in tuple(locals())
+        if not (name.startswith("__") and name.endswith("__"))
     ]
