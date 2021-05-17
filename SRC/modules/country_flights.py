@@ -15,7 +15,6 @@ class RoutesColumns:
 
 
 class FlightPerCountry:
-
     def __init__(self, airports_by_iata):
         # TODO add arguments airports_by_id and airports_by_icao dictionaries
         self.airports_by_iata = airports_by_iata
@@ -31,19 +30,21 @@ class FlightPerCountry:
         [[country, domestic flights, international_fligthts],]
         in alphabetical order
         """
-        results = [[c, self.countries[c][0], self.countries[c][1]]
-                   for c in sorted(self.countries.keys())]
+        results = [
+            [c, self.countries[c][0], self.countries[c][1]]
+            for c in sorted(self.countries.keys())
+        ]
 
         return results
 
     def process_flight(self, row):
-        '''
+        """
         Process each flight, get the airport countries
         and add the number of domestic and international flights to the countries dictionary
         from the source country.
         The flights where the source or destination airports are
         missing in airports_by_iata dictionary will be added to the unknown country record
-        '''
+        """
         # get row info
         try:
             source_airport = row[self.routes_col.source_airport]
@@ -53,14 +54,16 @@ class FlightPerCountry:
 
             # get countries
             source_country = self.get_airport_country(
-                airport_code=source_airport)
+                airport_code=source_airport
+            )
             destination_country = self.get_airport_country(
-                airport_code=destination_airport)
+                airport_code=destination_airport
+            )
 
             # check if is domestic or international flight
             domestic_flight = 1
             international_flight = 0
-            if (source_country != destination_country):
+            if source_country != destination_country:
                 domestic_flight = 0
                 international_flight = 1
 
@@ -82,13 +85,13 @@ class FlightPerCountry:
             pass
 
     def get_airport_country(self, airport_code=None, airport_id=None):
-        '''
+        """
         Return the country for the airport
         by checking the airport_code in the iata dictionary,
         if not found then return unknown_country variable.
-        '''
+        """
         country = self.airports_by_iata.get(airport_code, self.unknown_country)
-        '''
+        """
         TODO Test: when IATA code not found:
             use airport_id in the airport id dictionary
             or use airport_code in the ICAO dictionary.
@@ -98,5 +101,5 @@ class FlightPerCountry:
 
             if country == self.unknown_country:
                 country = self.airports_by_icao.get(airport_code, self.unknown_country)
-        '''
+        """
         return country

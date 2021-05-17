@@ -2,8 +2,9 @@
 import os
 import sys
 
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__),
-                                                '..')))
+sys.path.insert(
+    0, os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+)
 import unittest
 
 from modules import country_flights
@@ -41,19 +42,20 @@ class TestFlightPerCountry(unittest.TestCase):
         result = {}
         for iata in self.IataCountry:
             result[iata] = flightPerCountry.get_airport_country(
-                airport_code=iata)
+                airport_code=iata
+            )
         self.assertEqual(result, expected)
 
     def test_get_unknown_country(self):
         flightPerCountry = country_flights.FlightPerCountry({})
         expected = flightPerCountry.unknown_country
-        result = flightPerCountry.get_airport_country('KIO')
+        result = flightPerCountry.get_airport_country("KIO")
         self.assertEqual(result, expected)
 
     def test_get_country_flights(self):
-        """  this can check partial results, order not important
-            for example United States is exluded in the test
-            but is pressent in the flightPerCountry.countries
+        """this can check partial results, order not important
+        for example United States is exluded in the test
+        but is pressent in the flightPerCountry.countries
         """
         flightPerCountry = country_flights.FlightPerCountry(self.IataCountry)
 
@@ -73,8 +75,8 @@ class TestFlightPerCountry(unittest.TestCase):
         self.assertEqual(result, expected)
 
     def test_result_format(self):
-        """  this can check full results, order important
-            results are list of list.
+        """this can check full results, order important
+        results are list of list.
         """
 
         flightPerCountry = country_flights.FlightPerCountry(self.IataCountry)
@@ -93,5 +95,5 @@ class TestFlightPerCountry(unittest.TestCase):
         self.assertEqual(result, expected)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()
