@@ -1,0 +1,31 @@
+repos:
+-   repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v3.2.0
+    hooks:
+    -   id: check-ast
+    -   id: check-yaml
+    -   id: check-json
+    -   id: pretty-format-json
+        args: [
+            # --no-sort-keys,
+            --autofix,
+            --indent=4
+        ]
+    -   id: end-of-file-fixer
+    -   id: trailing-whitespace
+    -   id: check-docstring-first
+    -   id: check-merge-conflict
+    -   id: name-tests-test
+    -   id: requirements-txt-fixer
+-   repo: https://github.com/PyCQA/isort
+    rev: 5.6.4
+    hooks:
+    -   id: isort
+-   repo: https://github.com/psf/black
+    rev: 20.8b1
+    hooks:
+    -   id: black
+-   repo: https://gitlab.com/pycqa/flake8
+    rev: 3.8.4
+    hooks:
+    -   id: flake8

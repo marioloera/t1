@@ -1,35 +1,33 @@
 #!/usr/bin/env python3
-import os
-import sys
 import csv
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__),
-                                                '..')))
+import os
 import unittest
-from modules import airports
-from modules import country_flights
+
+from modules import airports, country_flights
 
 
 class TestFlightPerCountry(unittest.TestCase):
 
     src_dir = os.path.dirname(os.path.realpath(__file__))
-    data_dir = os.path.join(src_dir, 'test_data')
+    data_dir = os.path.join(src_dir, "test_data")
 
-    airports_file = os.path.join(data_dir, 'airports_test01.dat')
-    flights_file = os.path.join(data_dir, 'routes_test01.dat')
+    airports_file = os.path.join(data_dir, "airports_test01.dat")
+    flights_file = os.path.join(data_dir, "routes_test01.dat")
 
     def test_country_flight_files(self):
 
         # process_airport_file
         airport1 = airports.Airport()
-        with open(self.airports_file, 'r', encoding='UTF-8') as f:
+        with open(self.airports_file, "r", encoding="UTF-8") as f:
             reader = csv.reader(f)
             for row in reader:
                 airport1.process_airport_row(row)
 
         # process_flight_file
         flight_per_country = country_flights.FlightPerCountry(
-            airport1.airports_by_iata)
-        with open(self.flights_file, 'r', encoding='UTF-8') as f:
+            airport1.airports_by_iata
+        )
+        with open(self.flights_file, "r", encoding="UTF-8") as f:
             reader = csv.reader(f)
             for row in reader:
                 flight_per_country.process_flight(row)
@@ -50,5 +48,5 @@ class TestFlightPerCountry(unittest.TestCase):
         self.assertEqual(result, expected)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

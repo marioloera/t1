@@ -7,13 +7,13 @@ WITH
     ),
 
   CteFlights AS (
-    /*  
+    /*
     Get SourceCountry, DestinationCountry Per flight
     */
     SELECT
       COALESCE(S1.Country, S2.Country, CteUnkownCountry.UnkownCountry) AS SourceCountry,
       COALESCE(D1.Country, D2.Country, CteUnkownCountry.UnkownCountry) AS DestinationCountry
-    
+
     FROM mll.Routes, CteUnkownCountry
       -- using IATA
       LEFT JOIN mll.Airports AS S1
@@ -21,7 +21,7 @@ WITH
 
       LEFT JOIN mll.Airports AS D1
         ON Routes.DestinationAirport = D1.IATA
-     
+
       -- using AirpotId
       LEFT JOIN mll.Airports AS S2
         ON Routes.SourceAirportId = S2.AirportId
@@ -29,7 +29,7 @@ WITH
       LEFT JOIN mll.Airports AS D2
         ON Routes.DestinationAirportId = D2.AirportId
     ),
-  
+
   CteCountryFlights AS (
     /*
       determine if a flight is domestic or internationl
@@ -46,7 +46,7 @@ WITH
     GROUP BY 1
     )
 
-SELECT * 
+SELECT *
 FROM CteCountryFlights
 WHERE Country in ('Canada', 'China', 'Costa Rica', 'United States', 'unknown')
 ORDER BY Country

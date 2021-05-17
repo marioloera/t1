@@ -21,7 +21,6 @@ class AirportColumns:
 
 
 class Airport:
-
     def __init__(self):
         # {airport_iata_code: country}
         self.airports_by_iata = {}
@@ -30,10 +29,10 @@ class Airport:
         self.airport_col = AirportColumns()
 
     def process_airport_row(self, row):
-        '''
-        Process each airport to get the country 
+        """
+        Process each airport to get the country
         and store in the airports dictionary
-        '''
+        """
         # get row info
         try:
             id = row[self.airport_col.airport_id]

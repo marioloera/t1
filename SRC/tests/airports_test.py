@@ -1,21 +1,45 @@
 #!/usr/bin/env python3
-import os
-import sys
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__),
-                                                '..')))
+
 import unittest
+
 from modules import airports
 
 
 class TestAirport(unittest.TestCase):
 
     AirportData1 = [
-        (3484, "Los Angeles International Airport", "Los Angeles",
-         "United States", "LAX", "KLAX", 33.94250107, -118.4079971, 125, -8,
-         "A", "America/Los_Angeles", "airport", "OurAirports"),
-        (737, "Stockholm-Arlanda Airport", "Stockholm", "Sweden", "ARN", "ESSA",
-         59.651901245117, 17.918600082397, 137, 1, "E", "Europe/Stockholm",
-         "airport", "OurAirports"),
+        (
+            3484,
+            "Los Angeles International Airport",
+            "Los Angeles",
+            "United States",
+            "LAX",
+            "KLAX",
+            33.94250107,
+            -118.4079971,
+            125,
+            -8,
+            "A",
+            "America/Los_Angeles",
+            "airport",
+            "OurAirports",
+        ),
+        (
+            737,
+            "Stockholm-Arlanda Airport",
+            "Stockholm",
+            "Sweden",
+            "ARN",
+            "ESSA",
+            59.651901245117,
+            17.918600082397,
+            137,
+            1,
+            "E",
+            "Europe/Stockholm",
+            "airport",
+            "OurAirports",
+        ),
     ]
 
     def test_airports_by_id(self):
@@ -67,5 +91,5 @@ class TestAirport(unittest.TestCase):
         self.assertEqual(result, expected)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()
