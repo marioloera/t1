@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-import os
+import argparse
 import csv
 import logging
-import argparse
-from modules import airports
-from modules import country_flights
+import os
+
+from modules import airports, country_flights
 
 
 def main():

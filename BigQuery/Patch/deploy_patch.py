@@ -1,7 +1,8 @@
 import os
 from shutil import copy2
-from google.cloud import bigquery
+
 import pydata_google_auth
+from google.cloud import bigquery
 
 
 def main():

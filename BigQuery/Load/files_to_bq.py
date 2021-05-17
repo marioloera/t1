@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 import os
-import time
-from google.cloud import bigquery
-import pydata_google_auth
 import sys
+import time
+
+import pydata_google_auth
+from google.cloud import bigquery
 
 
 def main():
