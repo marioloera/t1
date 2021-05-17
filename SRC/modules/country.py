@@ -3,7 +3,6 @@ import logging
 
 
 class Country:
-
     def __init__(self):
         self.countries = {}
         self.unknown_country = "unknown"
@@ -16,21 +15,23 @@ class Country:
         [[country, domestic flights, international_fligthts],]
         in alphabetical order
         """
-        results = [[c, self.countries[c][0], self.countries[c][1]]
-                   for c in sorted(self.countries.keys())]
+        results = [
+            [c, self.countries[c][0], self.countries[c][1]]
+            for c in sorted(self.countries.keys())
+        ]
 
         return results
 
     def add_flight(self, source_country, destination_country):
-        '''
-            add to dic countries the domestic and internation flight increment
-        '''
+        """
+        add to dic countries the domestic and internation flight increment
+        """
         try:
 
             # check if is domestic or international flight
             domestic_flight = 1
             international_flight = 0
-            if (source_country != destination_country):
+            if source_country != destination_country:
                 domestic_flight = 0
                 international_flight = 1
 

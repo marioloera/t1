@@ -16,7 +16,6 @@ class FlightColumns:
 
 
 class Flights:
-
     def __init__(self, airports_by_iata):
         # TODO add arguments airports_by_id and airports_by_icao dictionaries
         self.airports_by_iata = airports_by_iata
@@ -24,11 +23,12 @@ class Flights:
         self.unknown_country = "unknown"
 
     def get_countries(self, row):
-        '''
+        """
         Process each flight, get the source and destination countries
         The flights where the source or destination airports are
-        missing in airports_by_iata dictionary will be added to the unknown country record
-        '''
+        missing in airports_by_iata dictionary will be added
+        to the unknown country record
+        """
         # get row info
         try:
             source_airport = row[self.flight_col.source_airport]
@@ -36,10 +36,12 @@ class Flights:
 
             # get countries
             source_country = self.get_airport_country(
-                airport_code=source_airport)
+                airport_code=source_airport
+            )
             destination_country = self.get_airport_country(
-                airport_code=destination_airport)
-            
+                airport_code=destination_airport
+            )
+
             return [source_country, destination_country]
 
         except Exception as ex:
