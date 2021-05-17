@@ -15,7 +15,7 @@ def main():
     deployCount = 0
     patch_name = next(os.walk(src_dir))[1][0]
     print(f"patch_name: {patch_name}")
-    patch = os.path.join("Patch", patch_name)
+    # patch = os.path.join("Patch", patch_name)
     for root, _, files in os.walk(src_dir):
 
         if patch_name not in root or "Patch_done" in root:
@@ -32,9 +32,10 @@ def main():
                 sql = f.read()
                 deployCount += bqClient.execute(sql)
                 f.close()
-            # copyCount += mv_file(filename=file, source_dir=patch, target_dir='DDL' )
+            # copyCount += mv_file(filename=file,
+            #              source_dir=patch, target_dir='DDL' )
             fileCount += 1
-    print(f"_" * 50)
+    print("_" * 50)
     print(f"fileCount: {fileCount}")
     print(f"deployCount: {deployCount}")
     print(f"copyCount: {copyCount}")

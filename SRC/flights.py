@@ -15,15 +15,18 @@ def main():
     # declare log file
     logging.basicConfig(
         filename=os.path.join(src_dir, "log", "flights.log"),
-        format="%(levelname)s: %(asctime)s: %(process)d: %(filename)s: %(funcName)s: %(message)s",
+        format="%(levelname)s: %(asctime)s: %(process)d: %(filename)s:"
+        " %(funcName)s: %(message)s",
         level=logging.INFO,
     )
-    logging.info(f"Process started!")
+    logging.info("Process started!")
 
     # output file
     parser = argparse.ArgumentParser()
     parser.add_argument(
-        "output_file", help="output file where results are stored"
+        "--output_file",
+        help="output file where results are stored",
+        default="output_data/output.csv",
     )
     args = parser.parse_args()
 
@@ -46,7 +49,7 @@ def main():
     results = flight_per_country.get_results_format1()
     save_data(args.output_file, results)
 
-    msg = f"Process completed!"
+    msg = "Process completed!"
     logging.info(msg)
     print(msg)
 

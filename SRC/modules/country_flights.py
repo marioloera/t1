@@ -40,17 +40,19 @@ class FlightPerCountry:
     def process_flight(self, row):
         """
         Process each flight, get the airport countries
-        and add the number of domestic and international flights to the countries dictionary
-        from the source country.
+        and add the number of domestic and international flights
+        to the countries dictionary from the source country.
         The flights where the source or destination airports are
-        missing in airports_by_iata dictionary will be added to the unknown country record
+        missing in airports_by_iata dictionary will be added to the
+        unknown country record
         """
         # get row info
         try:
             source_airport = row[self.routes_col.source_airport]
             destination_airport = row[self.routes_col.destination_airport]
             # source_airport_id = row[self.routes_col.source_airport_id]
-            # destination_airport_id = row[self.routes_col.destination_airport_id]
+            # destination_airport_id =
+            # row[self.routes_col.destination_airport_id]
 
             # get countries
             source_country = self.get_airport_country(
@@ -100,6 +102,7 @@ class FlightPerCountry:
             country = self.airports_by_id.get(airport_id, self.unknown_country)
 
             if country == self.unknown_country:
-                country = self.airports_by_icao.get(airport_code, self.unknown_country)
+                country = self.airports_by_icao.get(
+                    airport_code, self.unknown_country)
         """
         return country

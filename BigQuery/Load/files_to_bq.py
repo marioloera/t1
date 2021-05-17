@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 import os
-import sys
 import time
 
 import pydata_google_auth
@@ -18,7 +17,7 @@ def main():
     max_files = 30
     print("loanding files up to:", max_files)
     for filename in os.listdir(directory):
-        if not fileformat in filename:
+        if fileformat not in filename:
             continue
         if file_count >= max_files:
             break
