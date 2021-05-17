@@ -19,6 +19,12 @@ class AirportColumns:
     type = 12
     source = 13
 
+    __list__ = [
+        name
+        for name in tuple(locals())
+        if not (name.startswith("__") and name.endswith("__"))
+    ]
+
 
 class Airport:
     def __init__(self):
