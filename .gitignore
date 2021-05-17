@@ -2,3 +2,5 @@
 output_data/*.txt
 *.log
 venv/
+.coverage
+htmlcov
