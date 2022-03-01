@@ -1,0 +1,9 @@
+TO DO: ideas
+
+* bigquery with dbt
+
+* clean code
+
+* using beam
+
+* code compatible with b
